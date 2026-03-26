@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureStore Lacak Pengiriman</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f0f4f8; margin:0; }
+    header { background:#0077b6; color:white; padding:20px; text-align:center; }
+    .container { display:flex; justify-content:space-between; padding:20px; }
+    .map-section { flex:2; padding:20px; background:#fff; border-radius:6px; border:1px solid #ccc; }
+    .summary-section { flex:1; margin-left:20px; padding:20px; background:#fff; border-radius:6px; border:1px solid #ccc; }
+    .map { position:relative; height:200px; margin-bottom:20px; }
+    .path { border-top:2px dashed #0077b6; width:80%; margin:60px auto; }
+    .cart-icon { position:absolute; top:50px; left:10%; font-size:28px; color:orange; }
+    .home-icon { position:absolute; top:50px; right:10%; font-size:28px; }
+    .status { margin-top:20px; }
+    .step { margin:10px 0; }
+    .progress-bar { background:#ccc; height:10px; border-radius:5px; }
+    #progress { background:#0077b6; height:10px; width:0%; border-radius:5px; transition:width 0.3s; }
+    .active { font-weight:bold; color:#0077b6; }
+    footer { background:#eee; padding:10px; text-align:center; font-size:12px; margin-top:20px; }
+  </style>
+</head>
+<body>
+  <header><h1>SecureStore Pelacakan Pengiriman</h1></header>
+  <div class="container">
+    <!-- Bagian Map + Status -->
+    <div class="map-section">
+      <h3>KURIR SEDANG MENUJU LOKASI</h3>
+      <div class="map">
+        <div class="path"></div>
+        <div id="cart" class="cart-icon">🛒</div>
+        <div class="home-icon">🏠</div>
+      </div>
+      <h3>STATUS PENGIRIMAN</h3>
+      <div class="status">
+        <div id="step1" class="step">PESANAN DIPROSES – 11:30 AM</div>
+        <div id="step2" class="step">DALAM PERJALANAN – Sedang Bergerak</div>
+        <div id="step3" class="step">SAMPAI DI TUJUAN – Menunggu</div>
+        <div class="progress-bar"><div id="progress"></div></div>
+      </div>
+    </div>
+
+    <!-- Ringkasan Pesanan -->
+    <div class="summary-section">
+      <h3>RINGKASAN PESANAN</h3>
+      <p>ID #AQ-99210</p>
+      <p id="pesanan">Belum ada pesanan</p>
+    </div>
+  </div>
+  <footer>© 2026 SecureStore Systems</footer>
+
+  <script>
+    function animateTracking() {
+      let progress = document.getElementById("progress");
+      let cart = document.getElementById("cart");
+      let steps = [document.getElementById("step1"), document.getElementById("step2"), document.getElementById("step3")];
+      let pos = 10; 
+      let stage = 0;
+
+      function nextStage() {
+        steps[stage].classList.add("active");
+        let targetProgress = (stage+1)*33;
+        let interval = setInterval(() => {
+          if (pos < targetProgress) {
+            pos++;
+            progress.style.width = pos + "%";
+            cart.style.left = pos + "%";
+          } else {
+            clearInterval(interval);
+            stage++;
+            if (stage < steps.length) {
+              setTimeout(nextStage, 2000); // jeda 2 detik sebelum lanjut
+            } else {
+              // redirect ke terimakasih.html setelah selesai
+              setTimeout(() => {
+                window.location.href = "terimakasih.html";
+              }, 2000);
+            }
+          }
+        }, 250); // kecepatan sedang (250ms per langkah)
+      }
+      nextStage();
+    }
+    window.onload = animateTracking;
+  </script>
+</body>
+</html>

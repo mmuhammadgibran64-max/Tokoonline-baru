@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureStore Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      color: white;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 15px 0;
+      cursor: pointer;
+    }
+    .main {
+      margin-left: 240px;
+      padding: 20px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #34495e;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+    }
+    .inventory {
+      margin-top: 20px;
+    }
+    .item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .item h3 {
+      margin: 0;
+    }
+    .item p {
+      margin: 0;
+      font-weight: bold;
+    }
+    .tambah {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tambah:hover {
+      background: #219150;
+    }
+  </style>
+</head>
+<body>
+ <div class="sidebar">
+  <h2>SecureStore</h2>
+  <ul>
+    <li>Overview</li>
+    <li>Cemilan Stock</li>
+    <li>Galon Management</li>
+    <li>Sales Reports</li>
+    <li>Security</li>
+    <li>New Entry</li>
+    <li>Logout</li>
+    <!-- Link ke pengaturan -->
+    <li><a href="pengaturan.html" style="color:white; text-decoration:none;">Pengaturan</a></li>
+  </ul>
+</div>
+
+
+  <div class="main">
+    <div class="topbar">
+      <div>SecureStore Dashboard</div>
+      <div id="clock"></div>
+    </div>
+
+    <div class="inventory">
+      <h2>Ruangan Khusus Cemilan</h2>
+
+      <div class="item">
+        <h3>Peye Kacang (Kecil) 🥜</h3>
+        <p>Rp 5.000</p>
+        <button class="tambah" data-nama="Peye Kacang (Kecil)" data-harga="5000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Peye Kacang (Besar) 🥜</h3>
+        <p>Rp 10.000</p>
+        <button class="tambah" data-nama="Peye Kacang (Besar)" data-harga="10000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Slondok 🥜</h3>
+        <p>Rp 20.000</p>
+        <button class="tambah" data-nama="Slondok" data-harga="20000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Opak 🥜</h3>
+        <p>Rp 20.000</p>
+        <button class="tambah" data-nama="Opak" data-harga="20000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Kacang 🥜</h3>
+        <p>Rp 2.000</p>
+        <button class="tambah" data-nama="Kacang" data-harga="2000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Kripik Pedes 🥜</h3>
+        <p>Rp 15.000</p>
+        <button class="tambah" data-nama="Kripik Pedes" data-harga="15000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Kue Sus Kering 🧁</h3>
+        <p>Rp 15.000</p>
+        <button class="tambah" data-nama="Kue Sus Kering" data-harga="15000">+ TAMBAH</button>
+      </div>
+
+      <div class="item">
+        <h3>Reginang (isi 3) 🥜</h3>
+        <p>Rp 5.000</p>
+        <button class="tambah" data-nama="Reginang (isi 3)" data-harga="5000">+ TAMBAH</button>
+      </div>
+
+      <h2>Ruangan Khusus Galon</h2>
+      <div class="item">
+        <h3>Aqua Galon 19L 💧</h3>
+        <p>Rp 23.000</p>
+        <button class="tambah" data-nama="Aqua Galon 19L" data-harga="23000">+ TAMBAH</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8aUxIG4VnQKUfwiA4FaIKZTlNs03szIM",
+      authDomain: "data-base-penjualan.firebaseapp.com",
+      databaseURL: "https://data-base-penjualan-default-rtdb.firebaseio.com",
+      projectId: "data-base-penjualan",
+      storageBucket: "data-base-penjualan.firebasestorage.app",
+      messagingSenderId: "553087672290",
+      appId: "1:553087672290:web:04b5dfe6456962413323bb",
+      measurementId: "G-W7P6KKV362"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // Listener tombol
+    document.querySelectorAll(".tambah").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const nama = btn.getAttribute("data-nama");
+        const harga = btn.getAttribute("data-harga");
+
+        push(ref(db, "pesanan"), {
+          nama: nama,
+          harga: harga,
+          waktu: Date.now()
+        });
+
+        window.location.href = "pembayaran.html";
+      });
+    });
+
+    // Jam realtime di topbar
+    function updateClock() {
+      const now = new Date();
+      document.getElementById("clock").textContent =
+        now.toLocaleTimeString("id-ID");
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureStore Pembayaran</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f0f4f8; margin:0; }
+    header { background:#0077b6; color:white; padding:20px; text-align:center; }
+    .container { display:flex; justify-content:space-between; padding:20px; }
+    .payment-section { flex:1; padding:20px; background:#fff; border-radius:6px; border:1px solid #ccc; }
+    .summary-section { flex:1; margin-left:20px; padding:20px; background:#fff; border-radius:6px; border:1px solid #ccc; }
+    .payment-option { margin:10px 0; }
+    button { background:#0077b6; color:white; border:none; padding:10px 15px; border-radius:4px; cursor:pointer; margin-top:20px; }
+    button:hover { background:#005f87; }
+    footer { background:#eee; padding:10px; text-align:center; font-size:12px; margin-top:20px; }
+    .secure { margin-top:15px; font-size:12px; color:#333; }
+  </style>
+</head>
+<body>
+  <header><h1>SecureStore Pembayaran</h1></header>
+  <div class="container">
+    <!-- Metode Pembayaran -->
+    <div class="payment-section">
+      <h3>Metode Pembayaran</h3>
+      <p>Pilih opsi pembayaran aman untuk menyelesaikan pesanan Anda.</p>
+      <div class="payment-option">
+        <input type="radio" id="cash" name="metode" value="Cash" checked>
+        <label for="cash">Cash / Tunai – Bayar langsung di kasir atau saat serah terima barang.</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="ovo" name="metode" value="OVO">
+        <label for="ovo">OVO (COMING SOON)</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="dana" name="metode" value="Dana">
+        <label for="dana">Dana (COMING SOON)</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="shopeepay" name="metode" value="ShopeePay">
+        <label for="shopeepay">ShopeePay (COMING SOON)</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" id="linkaja" name="metode" value="LinkAja">
+        <label for="linkaja">LinkAja (COMING SOON)</label>
+      </div>
+      <button type="button" onclick="konfirmasiPembayaran()">Konfirmasi Pembayaran</button>
+      <div class="secure">
+        🔒 SSL Secure | ✅ Verified | Enterprise Grade Security | 256-bit Encryption
+      </div>
+    </div>
+
+    <!-- Ringkasan Pesanan -->
+    <div class="summary-section">
+      <h3>Ringkasan Pesanan</h3>
+      <div id="pesanan">Pesanan Anda kosong. Silakan tambahkan item ke keranjang.</div>
+    </div>
+  </div>
+  <footer>© 2026 SecureStore Systems</footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, get, child, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA8aUxIG4VnQKUfwiA4FaIKZTlNs03szIM",
+      authDomain: "data-base-penjualan.firebaseapp.com",
+      databaseURL: "https://data-base-penjualan-default-rtdb.firebaseio.com",
+      projectId: "data-base-penjualan",
+      storageBucket: "data-base-penjualan.firebasestorage.app",
+      messagingSenderId: "553087672290",
+      appId: "1:553087672290:web:04b5dfe6456962413323bb",
+      measurementId: "G-W7P6KKV362"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    // tampilkan ringkasan pesanan
+    const dbRef = ref(db);
+    get(child(dbRef, "keranjang")).then((snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        let html = "";
+        for (let key in data) {
+          html += `<p>${data[key].nama} – Rp ${data[key].harga}</p>`;
+        }
+        document.getElementById("pesanan").innerHTML = html;
+      }
+    });
+
+    // konfirmasi pembayaran → simpan ke Firebase node 'pembayaran'
+    window.konfirmasiPembayaran = function() {
+      const metode = document.querySelector('input[name="metode"]:checked').value;
+      const pembayaranRef = ref(db, "pembayaran");
+      push(pembayaranRef, {
+        metode: metode,
+        waktu: new Date().toLocaleString()
+      });
+      alert("Pembayaran dengan metode: " + metode + " dikonfirmasi!");
+      // setelah konfirmasi bisa diarahkan ke lacak.html
+      window.location.href = "lacak.html";
+    };
+  </script>
+</body>
+</html>

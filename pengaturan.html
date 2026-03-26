@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>SecureStore Settings</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+    }
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      color: white;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      font-size: 18px;
+      text-align: center;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+    }
+    .main {
+      margin-left: 240px;
+      padding: 20px;
+    }
+    .panel {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    h2 {
+      margin-top: 0;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .toggle input {
+      margin-right: 10px;
+    }
+    .input-group {
+      margin: 10px 0;
+    }
+    .input-group input {
+      padding: 5px;
+      width: 100px;
+    }
+    .btn {
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .btn:hover {
+      background: #219150;
+    }
+    .status {
+      margin: 5px 0;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+  <h2>SecureStore</h2>
+  <ul>
+    <li><a href="dashboard.html">Overview</a></li>
+    <li><a href="dashboard.html">Cemilan Stock</a></li>
+    <li><a href="dashboard.html">Galon Management</a></li>
+    <li><a href="dashboard.html">Sales Reports</a></li>
+    <li><a href="dashboard.html">Security</a></li>
+    <li><a href="dashboard.html">New Entry</a></li>
+    <li><a href="dashboard.html">Logout</a></li>
+    <li><a href="pengaturan.html"><b>Pengaturan</b></a></li>
+  </ul>
+</div>
+
+
+  <div class="main">
+    <div class="panel">
+      <h2>Konfigurasi Sistem</h2>
+      <p>Kelola otomasi inventaris, integrasi pembayaran, dan protokol keamanan operasional gudang Anda dalam satu panel kendali terpadu.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Manajemen Stok Otomatis</h3>
+      <div class="toggle">
+        <input type="checkbox" id="stokOtomatis">
+        <label for="stokOtomatis">Sinkronisasi inventaris real-time dengan setiap transaksi masuk</label>
+      </div>
+      <p>Logika Pengurangan: Sistem akan memotong stok otomatis saat pesanan dikonfirmasi.</p>
+      <p>Pencegahan Overselling: Produk otomatis jadi "Stok Habis" jika stok tidak mencukupi.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Notifikasi Ambang Batas</h3>
+      <div class="input-group">
+        <label>BATAS MINIMUM STOK (DEFAULT): </label>
+        <input type="number" id="batasStok" value="10"> Unit
+      </div>
+      <button class="btn">Simpan Ambang Batas</button>
+      <p>Peringatan restock akan dikirim via Email & Push Notification jika stok dibawah angka ini.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Reservasi Stok Sementara</h3>
+      <p>Kunci stok saat barang berada di keranjang pelanggan atau menunggu pembayaran.</p>
+      <p>Durasi: 1x24 Jam (Rekomendasi)</p>
+      <p class="status">Auto-Restock Aktif</p>
+    </div>
+
+    <div class="panel">
+      <h3>Integrasi Payment Gateway</h3>
+      <p>Multi-channel payment hub untuk otomasi rekonsiliasi keuangan.</p>
+      <ul>
+        <li>E-Wallet (GoPay, OVO, ShopeePay) - <span class="status">TERSAMBUNG</span></li>
+        <li>QRIS (Universal Scanner) - <span class="status">TERSAMBUNG</span></li>
+        <li>Retail Outlet (Alfamart, Indomaret) - <span class="status">NONAKTIF</span></li>
+        <li>VA BCA - <span class="status">TERSAMBUNG</span></li>
+        <li>VA Mandiri - <span class="status">TERSAMBUNG</span></li>
+      </ul>
+      <p class="status">KONEKSI WEBHOOK AKTIF</p>
+    </div>
+
+    <div class="panel">
+  <h3>Integrasi Kurir</h3>
+  <!-- ... isi Shipping Engine, Logika Berat vs Volume, Multi-Kurir, AWB, Tracking ... -->
+
+  <h4>Tracking Real-Time</h4>
+  <p>Status pengiriman dari kurir tersinkronisasi langsung di halaman pesanan toko Anda.</p>
+
+  <h4>Update Otomatis (Keamanan)</h4>
+  <p>Selalu aktifkan update otomatis untuk patch keamanan. Ini kritis untuk melindungi data kartu kredit atau data pribadi pelanggan dari peretasan.</p>
+
+  <h4>Update Otomatis (Patch)</h4>
+  <p>Biasanya hanya menambal celah kecil yang ditemukan peretas. Ukurannya kecil dan jarang merusak tampilan, sehingga aman dibiarkan otomatis.</p>
+
+  <h4>Update Manual (Fitur/Tema)</h4>
+  <p>Untuk perubahan besar (seperti versi WordPress atau tema utama), sebaiknya lakukan secara manual.</p>
+
+  <h4>Update Manual (Major Version)</h4>
+  <p>Perubahan besar pada core sistem (misal dari versi 1.1 ke 2.1). Ini membutuhkan pengawasan karena struktur coding‑nya bisa berubah total.</p>
+
+  <!-- Button dengan loading -->
+  <button class="btn" id="jalankanUpdate">Jalankan Update Sekarang</button>
+  <div id="loading" style="display:none; margin-top:10px;">⏳ Sedang update... mohon tunggu</div>
+  <div id="hasilUpdate" style="margin-top:10px; font-weight:bold;"></div>
+</div>
+
+<script>
+  document.getElementById("jalankanUpdate").addEventListener("click", () => {
+    const loading = document.getElementById("loading");
+    const hasil = document.getElementById("hasilUpdate");
+
+    // tampilkan loading
+    loading.style.display = "block";
+    hasil.innerHTML = "";
+
+    // simulasi proses update 3 detik
+    setTimeout(() => {
+      loading.style.display = "none";
+      hasil.innerHTML = "✅ Update selesai! Patch keamanan & konfigurasi kurir diperbarui.<br>" +
+                        "Ukuran data: 2.3 MB<br>" +
+                        "Status: Maintenance singkat sudah dijalankan.";
+    }, 3000);
+  });
+</script>
